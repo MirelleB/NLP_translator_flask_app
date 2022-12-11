@@ -18,6 +18,14 @@ def index():
     translated_text =  pipe(input)[0]['translation_text']
     return {'translated_text': translated_text}
 
+@app.route("/translate/<text>", methods=["GET", "POST"])
+def translate(text):
+    hostname = socket.gethostname()
+    translated_text =  pipe(text)[0]['translation_text']
+
+    if request.method == "GET":
+        return {'Instance':hostname, "translated_text":translated_text}
+
 if __name__ == '__main__':
     # start Flask
     app.run(debug=True)
